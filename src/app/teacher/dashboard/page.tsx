@@ -76,63 +76,68 @@ export default function TeacherDashboard() {
     router.push("/teacher/login");
   };
 
-  if (!authorized) return <p className="text-center mt-10">Checking access...</p>;
 
+  if (!authorized) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontSize: 20, color: 'var(--primary)', background: 'var(--background)' }}>
+        Checking access...
+      </div>
+    );
+  }
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
-      <h1 className="text-3xl font-bold text-center mb-6">Teacher Dashboard</h1>
-
-      {/* Update Points */}
-      <div className="bg-gray-800 p-6 rounded-lg shadow-md max-w-md mx-auto mb-6">
+    <div style={{ minHeight: '100vh', background: 'var(--background)', padding: 24 }}>
+      <h1 style={{ fontSize: 32, fontWeight: 800, textAlign: 'center', marginBottom: 24, color: 'var(--primary)' }}>Teacher Dashboard</h1>
+      <div className="card" style={{ maxWidth: 420, margin: '0 auto 32px auto' }}>
         <input
           type="text"
           placeholder="Student VID"
           value={vid}
           onChange={(e) => setVid(e.target.value)}
-          className="w-full p-2 rounded bg-gray-700 text-white mb-3"
+          className="form-input"
         />
         <input
           type="number"
           placeholder="Points (e.g., 10 or -10)"
           value={pointsChange}
           onChange={(e) => setPointsChange(Number(e.target.value))}
-          className="w-full p-2 rounded bg-gray-700 text-white mb-3"
+          className="form-input"
         />
         <button
           onClick={handlePointsChange}
-          className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded"
+          className="form-button"
         >
           Update Points
         </button>
-        {message && <p className="mt-3 text-center text-green-400">{message}</p>}
+        {message && <p style={{ marginTop: 12, textAlign: 'center', color: 'var(--primary)' }}>{message}</p>}
       </div>
-
-      {/* Students Table */}
-      <div className="bg-gray-800 p-6 rounded-lg shadow-md max-w-3xl mx-auto">
-        <h2 className="text-xl font-semibold mb-4 text-center">Students List</h2>
-        <table className="w-full border border-gray-700 text-center">
+      <div className="card" style={{ maxWidth: 900, margin: '0 auto' }}>
+        <h2 style={{ fontSize: 20, fontWeight: 600, marginBottom: 16, textAlign: 'center', color: 'var(--primary)' }}>Students List</h2>
+        <table className="table">
           <thead>
-            <tr className="bg-gray-700">
-              <th className="p-2 border">VID</th>
-              <th className="p-2 border">Name</th>
-              <th className="p-2 border">Roll No</th>
-              <th className="p-2 border">Points</th>
+            <tr>
+              <th>VID</th>
+              <th>Name</th>
+              <th>Roll No</th>
+              <th>Points</th>
             </tr>
           </thead>
           <tbody>
             {students.map((s) => (
               <tr key={s.id}>
-                <td className="border p-2">{s.vid}</td>
-                <td className="border p-2">{s.name}</td>
-                <td className="border p-2">{s.rollNumber}</td>
-                <td className="border p-2">{s.points}</td>
+                <td>{s.vid}</td>
+                <td>{s.name}</td>
+                <td>{s.rollNumber}</td>
+                <td>{s.points}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      <button onClick={handleLogout} className="mt-6 w-full max-w-md bg-red-600 hover:bg-red-700 py-2 rounded mx-auto block">
+      <button
+        onClick={handleLogout}
+        className="form-button"
+        style={{ maxWidth: 420, margin: '32px auto 0 auto', display: 'block' }}
+      >
         Logout
       </button>
     </div>

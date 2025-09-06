@@ -17,8 +17,12 @@ export default function TeacherLogin() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/teacher/dashboard");
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error: unknown) {
+      if (error && typeof error === "object" && "message" in error) {
+        alert((error as { message: string }).message);
+      } else {
+        alert("An error occurred.");
+      }
     } finally {
       setLoading(false);
     }

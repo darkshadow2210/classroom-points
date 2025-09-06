@@ -34,8 +34,12 @@ export default function StudentSignup() {
 
       alert("Signup successful!");
       router.push("/student/login");
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error: unknown) {
+      if (error && typeof error === "object" && "message" in error) {
+        alert((error as { message: string }).message);
+      } else {
+        alert("An error occurred.");
+      }
     } finally {
       setLoading(false);
     }

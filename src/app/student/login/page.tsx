@@ -18,8 +18,12 @@ export default function StudentLogin() {
       const email = `${rollNumber}@school.com`;
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/student/dashboard");
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error: unknown) {
+      if (error && typeof error === "object" && "message" in error) {
+        alert((error as { message: string }).message);
+      } else {
+        alert("An error occurred.");
+      }
     } finally {
       setLoading(false);
     }
@@ -61,7 +65,7 @@ export default function StudentLogin() {
           </button>
         </form>
         <p className="text-sm text-gray-400 text-center mt-4">
-          Don't have an account? Contact your teacher.
+          Don&apos;t have an account? Contact your teacher.
         </p>
       </div>
     </div>

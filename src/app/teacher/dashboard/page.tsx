@@ -6,7 +6,14 @@ import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 
 export default function TeacherDashboard() {
-  const [students, setStudents] = useState<any[]>([]);
+  type Student = {
+    id: string;
+    vid: string;
+    name: string;
+    rollNumber: string;
+    points: number;
+  };
+  const [students, setStudents] = useState<Student[]>([]);
   const [vid, setVid] = useState("");
   const [pointsChange, setPointsChange] = useState<number>(0);
   const [loading, setLoading] = useState(true);
@@ -40,8 +47,8 @@ export default function TeacherDashboard() {
     if (!authorized) return;
     const q = query(collection(db, "students"));
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      const list: any[] = [];
-      snapshot.forEach((doc) => list.push({ id: doc.id, ...doc.data() }));
+      const list: Student[] = [];
+      snapshot.forEach((doc) => list.push({ id: doc.id, ...(doc.data() as Omit<Student, "id">) }));
       setStudents(list);
       setLoading(false);
     });

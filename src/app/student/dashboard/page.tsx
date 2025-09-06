@@ -51,7 +51,7 @@ export default function StudentDashboard() {
 
   return (
     <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center relative overflow-hidden p-4">
-      {/* Neon Glow Background */}
+      {/* Neon Glow BG */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900 via-black to-blue-900 opacity-70"></div>
 
       {/* Title */}
